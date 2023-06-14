@@ -1,0 +1,13 @@
+-How to Guide-
+
+For Question 1 
+You may change the value of the 'int target' function to any number and the output will determine whether or not its in the array. 
+
+For Question 2
+You may change the value of the 'int indexTwo' function to any number that is within the size range of the array and it will change to the number that is the value of 'newValueTwo' function.
+
+For Question 3 
+You may change the value of the 'int newValueThree' function to any number and the program will output the list of numbers in the array plus the value that the user has given. 
+
+For Question 4 
+You may change the value of the 'int indexFour' function to any number that is within the size range of the array and a number will be removed determined by the value the user has changed it to. 

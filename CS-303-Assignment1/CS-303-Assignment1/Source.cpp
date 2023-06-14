@@ -43,7 +43,7 @@ int main() {
 	// *---Question 1---* //
 	int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int size = sizeof(arr) / sizeof(arr[0]);
-	int target = 10;
+	int target = 2;
 	int index = findInteger(arr, size, target);
 
 	// output for question 1 
