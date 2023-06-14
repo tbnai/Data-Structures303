@@ -22,11 +22,13 @@ int modifyArray(int arr[], int size, int indexTwo, int newValue) {
 	return -1;
 }
 // *---Question 3---* //
+// Will add a new integer
 void addNewInteger(int arrThree[], int& sizeThree, int newValueThree) {
 	arrThree[sizeThree] = newValueThree;
 	sizeThree++;
 }
 // *---Question 4---* //
+// This void will remove an integer
 void removeInteger(int arrFour[], int& sizeFour, int indexFour) {
 	if (indexFour >= 0 && indexFour < sizeFour) {
 		for (int i = indexFour;i < sizeFour - 1;i++) {
