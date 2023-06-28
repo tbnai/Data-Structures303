@@ -60,6 +60,47 @@ public:
 		}
 	}
 
+	void pop_back() {
+		if (NULL) {
+			std::cout << "Cannot perform pop_back()." << std::endl;
+			return;
+		}
+
+		if (head == tail) {
+			delete head;
+			head = tail = nullptr;
+		}
+		else {
+			Node* temp = head;
+			while (temp->next != tail) {
+				temp = temp->next;
+			}
+			delete tail;
+			tail = temp;
+			tail->next = nullptr;
+		}
+		num_items--;
+	}
+	T front() const {
+		if (NULL) {
+			std::cout << "Cannot perform front()." << std::endl;
+			return T();
+		}
+		return T();
+	}
+
+	T back() const {
+		if (NULL) {
+			std::cout << "Cannot perform " << std::endl;
+			return T();
+		}
+		return tail->data;
+	}
+
+	bool empty() const {
+		return num_items == 0;
+	}
+
 
 
 };
