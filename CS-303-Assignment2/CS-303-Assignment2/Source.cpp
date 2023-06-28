@@ -1,5 +1,6 @@
 
 #include<iostream>
+#include<string>
 
 
 template<typename T>
@@ -18,7 +19,8 @@ private:
 
 public:
 	Single_Linked_List() : head(nullptr), tail(nullptr), num_items(0){}
-
+	
+	// push_front
 	void push_front(const T& item) {
 		Node* new_node = new Node(item);
 		if (tail == NULL) {
@@ -30,7 +32,7 @@ public:
 		head = new_node;
 		num_items++;
 	}
-
+	// push_back
 	void push_back(const T& item) {
 		Node* new_node = new Node(item);
 		if (head == NULL) {
@@ -42,7 +44,7 @@ public:
 		tail = new_node;
 		num_items++;
 	}
-
+	//pop_front
 	void pop_front() {
 		if (NULL) {
 			std::cout << "List is empty. Cannot perform pop_front()." << std::endl;
@@ -59,7 +61,7 @@ public:
 			tail = nullptr;
 		}
 	}
-
+	// pop_back
 	void pop_back() {
 		if (NULL) {
 			std::cout << "Cannot perform pop_back()." << std::endl;
@@ -81,6 +83,8 @@ public:
 		}
 		num_items--;
 	}
+
+	// front
 	T front() const {
 		if (NULL) {
 			std::cout << "Cannot perform front()." << std::endl;
@@ -89,6 +93,7 @@ public:
 		return T();
 	}
 
+	// back
 	T back() const {
 		if (NULL) {
 			std::cout << "Cannot perform " << std::endl;
@@ -96,11 +101,11 @@ public:
 		}
 		return tail->data;
 	}
-
+	// empty
 	bool empty() const {
 		return num_items == 0;
 	}
-
+	// void insert
 	void insert(size_t index, const T& item) {
 		if (index > num_items) {
 			push_back(item);
@@ -120,6 +125,7 @@ public:
 		temp->next = new_node;
 		num_items++;
 	}
+	// bool remove
 	bool remove(size_t index) {
 		if (index >= num_items) {
 			return false;
@@ -142,6 +148,7 @@ public:
 		num_items--;
 		return true;
 	}
+	// size_t
 	size_t find(const T& item) {
 		Node* temp = head;
 		size_t index = 0;
@@ -161,6 +168,59 @@ public:
 			temp = temp->next;
 		}
 		std::cout << std::endl;
+	}
+};
+
+class Employee {
+protected:
+	std::string name;
+public:
+	Employee(const std::string& name) : name(name) {}
+
+	virtual double calculateWeeklySalary() const = 0;
+	virtual double computeHealthCareContributions() const = 0;
+	virtual int computeVacationDays() const = 0;
+};
+
+class Professional : public Employee {
+private:
+	double monthlySalary;
+	int vacationDays;
+public:
+	Professional(const std::string& name, double monthlySalary, int vacationDays)
+		:Employee(name), monthlySalary(monthlySalary), vacationDays(vacationDays) {}
+
+	double calculateWeeklySalary() const override {
+		return monthlySalary / 4;
+	}
+
+	double computeHealthCareContributions() const override {
+		return monthlySalary * 0.1;
+	}
+
+	int computeVacationDays() const override {
+		return vacationDays;
+	}
+};
+
+class Nonprofessional : public Employee {
+private:
+	double hourlyRate;
+	int workedHours;
+public:
+	Nonprofessional(const std::string& name, double hourlyRate,int workedHours)
+		: Employee(name), hourlyRate(hourlyRate), workedHours(workedHours){}
+
+	double calculateWeeklySalary() const override {
+		return hourlyRate * workedHours;
+	}
+
+	double computeHealthCareContributions() const override {
+		return hourlyRate * workedHours * 0.05;
+	}
+
+	int computeVacationDays() const override {
+		return workedHours / 8;
 	}
 };
 
