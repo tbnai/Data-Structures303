@@ -32,6 +32,7 @@ public:
 		head = new_node;
 		num_items++;
 	}
+
 	// push_back
 	void push_back(const T& item) {
 		Node* new_node = new Node(item);
@@ -44,6 +45,7 @@ public:
 		tail = new_node;
 		num_items++;
 	}
+
 	//pop_front
 	void pop_front() {
 		if (NULL) {
@@ -61,6 +63,7 @@ public:
 			tail = nullptr;
 		}
 	}
+
 	// pop_back
 	void pop_back() {
 		if (NULL) {
@@ -101,10 +104,12 @@ public:
 		}
 		return tail->data;
 	}
+
 	// empty
 	bool empty() const {
 		return num_items == 0;
 	}
+
 	// void insert
 	void insert(size_t index, const T& item) {
 		if (index > num_items) {
@@ -125,6 +130,7 @@ public:
 		temp->next = new_node;
 		num_items++;
 	}
+
 	// bool remove
 	bool remove(size_t index) {
 		if (index >= num_items) {
@@ -148,6 +154,7 @@ public:
 		num_items--;
 		return true;
 	}
+
 	// size_t
 	size_t find(const T& item) {
 		Node* temp = head;
@@ -171,6 +178,7 @@ public:
 	}
 };
 
+// Employee
 class Employee {
 protected:
 	std::string name;
@@ -182,6 +190,7 @@ public:
 	virtual int computeVacationDays() const = 0;
 };
 
+// Professional 
 class Professional : public Employee {
 private:
 	double monthlySalary;
@@ -202,7 +211,7 @@ public:
 		return vacationDays;
 	}
 };
-
+// Nonprofessional
 class Nonprofessional : public Employee {
 private:
 	double hourlyRate;
@@ -261,7 +270,7 @@ int main() {
 	list.remove(2);
 	list.display(); // Output: 20 25 40
 
-	// find
+/*	// find
 	size_t index = list.find(25);
 	if (index != list.size()) {
 		std::cout << "Found at index: " << index << std::endl; // Output: Found at index: 1
@@ -269,6 +278,23 @@ int main() {
 	else {
 		std::cout << "Item not found" << std::endl;
 	}
+	*/
+
+	// instances of professional and nonprofessional employees
+	Professional professionalEmployee("John Doe", 5000, 15);
+	Nonprofessional nonprofessionalEmployee("Jane Smith", 20, 40);
+
+	// Testing methods
+	std::cout << "Professional Employee:" << std::endl;
+	std::cout << "Professional Employee:" << std::endl;
+	std::cout << "Weekly Salary: " << professionalEmployee.calculateWeeklySalary() << std::endl;
+	std::cout << "Health Care Contributions: " << professionalEmployee.computeHealthCareContributions() << std::endl;
+	std::cout << "Vacation Days: " << professionalEmployee.computeVacationDays() << std::endl;
+
+	std::cout << "\nNonprofessional Employee:" << std::endl;
+	std::cout << "Weekly Salary: " << nonprofessionalEmployee.calculateWeeklySalary() << std::endl;
+	std::cout << "Health Care Contributions: " << nonprofessionalEmployee.computeHealthCareContributions() << std::endl;
+	std::cout << "Vacation Days: " << nonprofessionalEmployee.computeVacationDays() << std::endl;
 
 	return 0;
 }
