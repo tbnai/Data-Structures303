@@ -1,70 +1,64 @@
 #include <iostream>
 #include <stack>
 #include <string>
+#include <unordered_map>
 
 using namespace std;
 
+// Function to check if a character is an operator
 bool isOperator(char c) {
-    return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
+    return (c == '+' || c == '-' || c == '*' || c == '/');
 }
 
+// Function to get the precedence of an operator
 int getPrecedence(char c) {
     if (c == '+' || c == '-')
         return 1;
-    else if (c == '*' || c == '/' || c == '%')
+    else if (c == '*' || c == '/')
         return 2;
-    else
-        return 0;
+    return 0;
 }
 
-bool isBalancedParentheses(const string& expression) {
-    stack<char> parenthesesStack;
-    for (char c : expression) {
-        if (c == '{' || c == '(' || c == '[') {
-            parenthesesStack.push(c);
-        }
-        else if (c == '}' || c == ')' || c == ']') {
-            if (parenthesesStack.empty())
-                return false;
-            char top = parenthesesStack.top();
-            parenthesesStack.pop();
-            if ((c == '}' && top != '{') || (c == ')' && top != '(') || (c == ']' && top != '['))
-                return false;
-        }
-    }
-    return parenthesesStack.empty();
-}
-
-string infixToPostfix(const string& infix) {
+// Function to convert infix to postfix notation
+string infixToPostfix(string infix) {
     stack<char> operatorStack;
-    string postfix = "";
+    string postfix;
+    unordered_map<char, int> precedence;
+
+    precedence['+'] = 1;
+    precedence['-'] = 1;
+    precedence['*'] = 2;
+    precedence['/'] = 2;
+
     for (char c : infix) {
-        if (isOperator(c)) {
-            while (!operatorStack.empty() && isOperator(operatorStack.top()) && getPrecedence(operatorStack.top()) >= getPrecedence(c)) {
-                postfix += operatorStack.top();
-                operatorStack.pop();
-            }
-            operatorStack.push(c);
+        if (isalnum(c)) {
+            postfix += c; // Add operand directly to postfix expression
         }
         else if (c == '(') {
-            operatorStack.push(c);
+            operatorStack.push('(');
         }
         else if (c == ')') {
             while (!operatorStack.empty() && operatorStack.top() != '(') {
                 postfix += operatorStack.top();
                 operatorStack.pop();
             }
-            if (!operatorStack.empty() && operatorStack.top() == '(')
-                operatorStack.pop();
+            operatorStack.pop(); // Pop '(' from the stack
         }
-        else {
-            postfix += c;
+        else if (isOperator(c)) {
+            while (!operatorStack.empty() && precedence[c] <= precedence[operatorStack.top()]) {
+                postfix += operatorStack.top();
+                operatorStack.pop();
+            }
+            operatorStack.push(c);
         }
     }
+
+    // Pop any remaining operators from the stack
     while (!operatorStack.empty()) {
         postfix += operatorStack.top();
         operatorStack.pop();
     }
+
     return postfix;
 }
 
@@ -73,13 +67,8 @@ int main() {
     cout << "Enter an infix expression: ";
     getline(cin, infixExpression);
 
-    if (!isBalancedParentheses(infixExpression)) {
-        cout << "Invalid expression! It fails the balanced parentheses check." << endl;
-    }
-    else {
-        string postfixExpression = infixToPostfix(infixExpression);
-        cout << "Postfix expression: " << postfixExpression << endl;
-    }
+    string postfixExpression = infixToPostfix(infixExpression);
+    cout << "Postfix expression: " << postfixExpression << endl;
 
     return 0;
 }
