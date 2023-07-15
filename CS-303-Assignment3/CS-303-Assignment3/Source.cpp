@@ -5,6 +5,90 @@
 
 using namespace std;
 
+class Queue {
+private:
+    struct Node {
+        int data;
+        Node* next;
+        Node(int value) : data(value), next(nullptr) {}
+    };
+
+    Node* front;
+    Node* rear;
+    int size;
+
+public:
+    Queue() : front(nullptr), rear(nullptr), size(0) {}
+
+    void enqueue(int value) {
+        Node* newNode = new Node(value);
+        if (isEmpty()) {
+            front = newNode;
+            rear = newNode;
+        }
+        else {
+            rear->next = newNode;
+            rear = newNode;
+        }
+        size++;
+    }
+
+    int dequeue() {
+        if (isEmpty()) {
+            std::cerr << "Error: Queue is empty." << std::endl;
+            return -1; // Assuming -1 represents an error value
+        }
+        Node* temp = front;
+        int value = temp->data;
+        front = front->next;
+        delete temp;
+        size--;
+        if (isEmpty()) {
+            rear = nullptr;
+        }
+        return value;
+    }
+
+    int getFront() {
+        if (isEmpty()) {
+            std::cerr << "Queue is empty." << std::endl;
+            return -1; // Assuming -1 represents an error value
+        }
+        return front->data;
+    }
+
+    bool isEmpty() {
+        return (size == 0);
+    }
+
+    int getSize() {
+        return size;
+    }
+};
+
+bool isBalanced(const string& expression) {
+    stack<char> st;
+    for (char c : expression) {
+        if (c == '(' || c == '{' || c == '[') {
+            st.push(c);
+        }
+        else if (c == ')' || c == '}' || c == ']') {
+            if (st.empty())
+                return false;
+
+            char top = st.top();
+            st.pop();
+
+            if ((c == ')' && top != '(') ||
+                (c == '}' && top != '{') ||
+                (c == ']' && top != '[')) {
+                return false;
+            }
+        }
+    }
+    return st.empty();
+}
+
 // Function to check if a character is an operator
 bool isOperator(char c) {
     return (c == '+' || c == '-' || c == '*' || c == '/');
@@ -63,9 +147,30 @@ string infixToPostfix(string infix) {
 }
 
 int main() {
+
+    Queue queue;
+
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+
+    cout << "Front element: " << queue.getFront() << endl;
+    cout << "Size: " << queue.getSize() << endl;
+
+    int dequeued = queue.dequeue();
+    cout << "Dequeued element: " << dequeued << endl;
+
+    cout << "Front element: " << queue.getFront() << endl;
+    cout << "Size: " << queue.getSize() << endl;
+
     string infixExpression;
     cout << "Enter an infix expression: ";
     getline(cin, infixExpression);
+
+    if (!isBalanced(infixExpression)) {
+        cout << "Not Balanced. Try again. " << endl;
+        return 0;
+    }
 
     string postfixExpression = infixToPostfix(infixExpression);
     cout << "Postfix expression: " << postfixExpression << endl;
