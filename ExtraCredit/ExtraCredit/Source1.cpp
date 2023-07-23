@@ -2,9 +2,11 @@
 
 using namespace std;
 
-/* Develop a spell - checker using data structure.The program should take a
-word as inputand check if it is spelled correctly.If not, it should suggest
-the closest matching words. */
+// represents an edge between two cities with a given distance
+// represents the graph for all cities and their connections 
+// dijkstra's algorithm to find the shortest path between two cities
+// priority queue to store cities based on the minimum distance from the startcity
+// 
 
 
 
