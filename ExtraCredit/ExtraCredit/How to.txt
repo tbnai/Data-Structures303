@@ -1,0 +1,1 @@
+Simply change the string value to any letter from A to E from start to finish and the code will output the shortest distant from given starting point to end. 

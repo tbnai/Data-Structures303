@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include <unordered_map>
 #include <queue>
@@ -67,17 +69,30 @@ private:
 };
 
 int main() {
+    ifstream inputFile("input.txt");
+    if (!inputFile) {
+        cerr << "Error opening input file." << endl;
+        return 1;
+    }
+
     Graph cityMap;
-    cityMap.addEdge("A", "B", 3);
-    cityMap.addEdge("A", "C", 2);
-    cityMap.addEdge("B", "C", 1);
-    cityMap.addEdge("B", "D", 4);
-    cityMap.addEdge("C", "D", 6);
-    cityMap.addEdge("D", "E", 2);
-    cityMap.addEdge("C", "E", 5);
+
+    string line;
+    while (getline(inputFile, line)) {
+        istringstream iss(line);
+        string source, destination;
+        int weight;
+        if (!(iss >> source >> destination >> weight)) {
+            cerr << "Error parsing input file." << endl;
+            return 1;
+        }
+        cityMap.addEdge(source, destination, weight);
+    }
+
+    inputFile.close();
 
     string start = "A";
-    string end = "D";
+    string end = "E";
 
     vector<string> shortestPath = cityMap.findShortestPath(start, end);
 
